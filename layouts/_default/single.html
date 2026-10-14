@@ -1,0 +1,25 @@
+{{ define "main" }}
+<article class="makale">
+  <h1>{{ .Title }}</h1>
+  <p class="bilgi">
+    {{ if eq .Section "yazilar" }}
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2 January 2006" }}</time> · {{ .ReadingTime }} dk okuma
+    {{ else if .Params.dosya }}
+      {{ .Date | time.Format "2 January 2006" }}
+    {{ end }}
+  </p>
+  {{ with .Description }}{{ if or (eq $.Section "yazilar") (eq $.Section "kaynaklar") }}<p class="slogan">{{ . }}</p>{{ end }}{{ end }}
+  <div class="icerik">{{ .Content }}</div>
+  {{ with .Params.dosya }}<p><a class="dugme" href="{{ . | relURL }}" download>İndir</a></p>{{ end }}
+  {{ with .Params.tags }}
+    <p class="etiketler">{{ range . }}<a href="{{ printf "tags/%s/" (urlize .) | relURL }}">#{{ . }}</a>{{ end }}</p>
+  {{ end }}
+  {{ if eq .Section "yazilar" }}
+    <nav class="onceki-sonraki" aria-label="Yazılar arasında gezin">
+      {{ with .PrevInSection }}<a rel="prev" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+      {{ with .NextInSection }}<a rel="next" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
+    </nav>
+    {{ partial "yazar.html" . }}
+  {{ end }}
+</article>
+{{ end }}

@@ -1,0 +1,10 @@
+<article class="akis">
+  <a class="zaman" href="{{ .RelPermalink }}"><time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date | time.Format "2 Jan 2006, 15:04" }}</time></a>
+  <div class="govde">
+    {{ with .Title }}<h3>{{ . }}</h3>{{ end }}
+    {{ .Content }}
+    {{ with .Params.tags }}
+      <p class="etiketler">{{ range . }}<a href="{{ printf "tags/%s/" (urlize .) | relURL }}">#{{ . }}</a>{{ end }}</p>
+    {{ end }}
+  </div>
+</article>

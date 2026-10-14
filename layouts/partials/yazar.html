@@ -1,0 +1,8 @@
+<aside class="yazar" aria-label="Yazar hakkında">
+  <div class="yazar-isaret" aria-hidden="true">{{ substr .Site.Params.author 0 1 }}</div>
+  <div>
+    <strong>{{ .Site.Params.author }}</strong>
+    <p>{{ .Site.Params.authorBio }}</p>
+    {{ with site.GetPage "hakkimda" }}<p><a href="{{ .RelPermalink }}">Daha fazlası</a></p>{{ end }}
+  </div>
+</aside>

@@ -1,0 +1,5 @@
+<article class="yazi">
+  <h3><a href="{{ .RelPermalink }}">{{ partial "baslik.html" . | htmlEscape }}</a></h3>
+  {{ if eq .Section "yazilar" }}<p class="tarih"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2 January 2006" }}</time></p>{{ end }}
+  {{ with .Description }}<p>{{ . }}</p>{{ else }}<p>{{ .Summary | plainify | truncate 160 }}</p>{{ end }}
+</article>

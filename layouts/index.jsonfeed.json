@@ -1,0 +1,19 @@
+{{- $pages := where .Site.RegularPages "Section" "in" (slice "akis" "yazilar") -}}
+{{- $pages = first 30 $pages.ByDate.Reverse -}}
+{{- $items := slice -}}
+{{- range $pages -}}
+  {{- $items = $items | append (dict
+    "id" .Permalink
+    "url" .Permalink
+    "title" (partial "baslik.html" .)
+    "content_html" (string .Content)
+    "date_published" (.Date.Format "2006-01-02T15:04:05Z07:00")
+    "tags" (default (slice) .Params.tags)) -}}
+{{- end -}}
+{{- dict
+  "version" "https://jsonfeed.org/version/1.1"
+  "title" .Site.Title
+  "home_page_url" .Site.Home.Permalink
+  "feed_url" (printf "%sfeed.json" .Site.Home.Permalink)
+  "language" "tr"
+  "items" $items | jsonify (dict "indent" "  ") -}}

@@ -1,0 +1,6 @@
+{{ define "main" }}
+<section class="makale">
+  <p class="bilgi"><a href="{{ "akis/" | relURL }}">← Tüm akış</a></p>
+  <div class="akis-liste">{{ partial "akis-item.html" . }}</div>
+</section>
+{{ end }}

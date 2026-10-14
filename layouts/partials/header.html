@@ -1,0 +1,15 @@
+<header class="ust">
+  <div class="kap">
+    <a class="marka" href="{{ "" | relURL }}">{{ .Site.Title }}</a>
+    <nav aria-label="Ana menü">
+      <ul class="menu">
+        {{ $current := . }}
+        {{ range site.Menus.main }}
+          {{ $aktif := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}
+          {{ with .Page }}{{ if and (not $current.IsHome) .IsSection ($current.InSection .) }}{{ $aktif = true }}{{ end }}{{ end }}
+          <li><a href="{{ .URL }}"{{ if $aktif }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+        {{ end }}
+      </ul>
+    </nav>
+  </div>
+</header>

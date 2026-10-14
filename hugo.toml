@@ -1,0 +1,59 @@
+# Depo kullanıcı sitesi değilse (kuzberk.github.io/kurcala/) bu adres alt dizinli olur.
+# Özel alan adı bağlarsan burayı onunla değiştir. Deploy sırasında otomatik ezilir.
+baseURL = "https://kuzberk.github.io/kurcala/"
+title = "Kurcala"
+languageCode = "tr-TR"
+defaultContentLanguage = "tr"
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 20
+
+[taxonomies]
+  tag = "tags"
+
+[mediaTypes."application/feed+json"]
+  suffixes = ["json"]
+
+[outputFormats.JSONFeed]
+  mediaType = "application/feed+json"
+  baseName = "feed"
+  rel = "alternate"
+  isPlainText = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSONFeed"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
+
+[params]
+  slogan = "Kurcalayıp öğrendiklerimin defteri."
+  description = "Kuzberk'in kişisel akışı: kısa notlar, yazılar ve kaynaklar."
+  author = "Kuzberk"
+  authorBio = "Yazılım geliştiriyorum, kurcalamayı seviyorum. Burada düşündüklerimi ve öğrendiklerimi paylaşıyorum."
+  github = "https://github.com/kuzberk"
+  # E-posta bülteni formu/sayfası adresi (Buttondown vb.). Boşsa gösterilmez.
+  bulten = ""
+
+[menus]
+  [[menus.main]]
+    name = "Buradan başla"
+    pageRef = "/buradan-basla"
+    weight = 1
+  [[menus.main]]
+    name = "Akış"
+    pageRef = "/akis"
+    weight = 2
+  [[menus.main]]
+    name = "Yazılar"
+    pageRef = "/yazilar"
+    weight = 3
+  [[menus.main]]
+    name = "Kaynaklar"
+    pageRef = "/kaynaklar"
+    weight = 4
+  [[menus.main]]
+    name = "Hakkımda"
+    pageRef = "/hakkimda"
+    weight = 5

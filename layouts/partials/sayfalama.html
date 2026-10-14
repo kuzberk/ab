@@ -1,0 +1,7 @@
+{{ with .Paginator }}{{ if gt .TotalPages 1 }}
+<nav class="sayfalar" aria-label="Sayfalama">
+  {{ if .HasPrev }}<a rel="prev" href="{{ .Prev.URL }}">Daha yeni</a>{{ else }}<span></span>{{ end }}
+  <span>{{ .PageNumber }} / {{ .TotalPages }}</span>
+  {{ if .HasNext }}<a rel="next" href="{{ .Next.URL }}">Daha eski</a>{{ else }}<span></span>{{ end }}
+</nav>
+{{ end }}{{ end }}

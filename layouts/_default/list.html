@@ -1,0 +1,12 @@
+{{ define "main" }}
+<section class="makale">
+  <h1>{{ if eq .Kind "term" }}#{{ .Data.Term }}{{ else }}{{ .Title }}{{ end }}</h1>
+  {{ with .Description }}<p class="slogan">{{ . }}</p>{{ end }}
+  {{ with .Content }}<div class="icerik">{{ . }}</div>{{ end }}
+  {{ $p := .Paginate (.Pages.ByDate.Reverse) }}
+  <div class="{{ if eq .Section "akis" }}akis-liste{{ else }}yazi-liste{{ end }}">
+    {{ range $p.Pages }}{{ partial "item.html" . }}{{ end }}
+  </div>
+  {{ partial "sayfalama.html" . }}
+</section>
+{{ end }}

@@ -1,0 +1,13 @@
+<footer class="alt">
+  <div class="kap">
+    <p>
+      {{ with .Site.Home.OutputFormats.Get "RSS" }}<a href="{{ .Permalink }}">RSS</a>{{ end }}
+      {{ with .Site.Home.OutputFormats.Get "JSONFeed" }} · <a href="{{ .Permalink }}">JSON Feed</a>{{ end }}
+      {{ with .Site.Params.bulten }} · <a href="{{ . }}">Bülten</a>{{ end }}
+      {{ with .Site.Params.github }} · <a href="{{ . }}" rel="me">GitHub</a>{{ end }}
+      {{ with site.GetPage "iletisim" }} · <a href="{{ .RelPermalink }}">İletişim</a>{{ end }}
+      {{ with site.GetPage "tags" }} · <a href="{{ .RelPermalink }}">Etiketler</a>{{ end }}
+    </p>
+    <p class="soluk">© {{ now.Year }} {{ .Site.Params.author }}. Önce burada yayınlanır, sonra başka yere gider.</p>
+  </div>
+</footer>

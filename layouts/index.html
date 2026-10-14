@@ -1,0 +1,42 @@
+{{ define "main" }}
+<section class="giris">
+  <h1>{{ .Site.Title }}</h1>
+  <p class="slogan">{{ .Site.Params.slogan }}</p>
+  {{ with .Content }}<div class="icerik">{{ . }}</div>{{ end }}
+  {{ with site.GetPage "buradan-basla" }}<p><a class="dugme" href="{{ .RelPermalink }}">Buradan başla</a></p>{{ end }}
+</section>
+
+<nav class="kapilar" aria-label="Bölümler">
+  {{ range slice "akis" "yazilar" "kaynaklar" }}
+    {{ with site.GetPage (printf "/%s" .) }}
+      <a class="kapi" href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong><span>{{ .Description }}</span></a>
+    {{ end }}
+  {{ end }}
+</nav>
+
+{{ $akis := first 8 (where site.RegularPages "Section" "akis").ByDate.Reverse }}
+{{ with $akis }}
+<section>
+  <div class="bolum-baslik">
+    <h2>Son akış</h2>
+    <a href="{{ "akis/" | relURL }}">Tüm akış</a>
+  </div>
+  <div class="akis-liste">
+    {{ range . }}{{ partial "akis-item.html" . }}{{ end }}
+  </div>
+</section>
+{{ end }}
+
+{{ $yazilar := first 4 (where site.RegularPages "Section" "yazilar").ByDate.Reverse }}
+{{ with $yazilar }}
+<section>
+  <div class="bolum-baslik">
+    <h2>Son yazılar</h2>
+    <a href="{{ "yazilar/" | relURL }}">Tüm yazılar</a>
+  </div>
+  {{ range . }}{{ partial "yazi-item.html" . }}{{ end }}
+</section>
+{{ end }}
+
+{{ partial "yazar.html" . }}
+{{ end }}

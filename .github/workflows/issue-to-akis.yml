@@ -1,0 +1,47 @@
+name: Issue'dan akış paylaşımı
+
+# "akis" etiketli bir issue açtığında içeriği akışa dosya olarak ekler,
+# issue'yu kapatır ve siteyi yeniden yayınlar. Sadece depo sahibi için çalışır.
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+jobs:
+  paylas:
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      contains(github.event.issue.labels.*.name, 'akis')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Akış dosyası oluştur ve gönder
+        env:
+          BODY: ${{ github.event.issue.body }}
+          TITLE: ${{ github.event.issue.title }}
+          NUMARA: ${{ github.event.issue.number }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          export TZ=Europe/Istanbul
+          metin="$(printf '%s' "${BODY:-$TITLE}" | tr -d '\r')"
+          dosya="content/akis/$(date +%Y-%m-%d-%H%M%S).md"
+          {
+            echo '---'
+            echo "date: $(date +%Y-%m-%dT%H:%M:%S)+03:00"
+            echo 'tags: []'
+            echo '---'
+            echo
+            printf '%s\n' "$metin"
+          } > "$dosya"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$dosya"
+          git commit -m "akış: issue #${NUMARA}"
+          git push
+          gh issue close "$NUMARA" --comment "Akışa eklendi."
+          gh workflow run deploy.yml
